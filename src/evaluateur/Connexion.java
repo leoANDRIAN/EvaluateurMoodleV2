@@ -1,12 +1,12 @@
 package evaluateur;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class Connexion { //Cette classe est configurée pour se connecter au BD locales
+public class Connexion { //Cette classe est configurï¿½e pour se connecter au BD locales
 	
 	//Attributs
 	private String driver;
@@ -17,24 +17,24 @@ public class Connexion { //Cette classe est configurée pour se connecter au BD l
 	
 	//Constructeurs
 	public Connexion(String sgbd) {
-		switch (sgbd) { //Chargement du driver adapté et connexion au SGBD choisi par l'enseignant sur codeRunner
+		switch (sgbd) { //Chargement du driver adaptï¿½ et connexion au SGBD choisi par l'enseignant sur codeRunner
 		  case "mySQL" :
 			  driver = "com.mysql.jdbc.Driver";
-			  url = "jdbc:mysql://localhost:3306/testevaluateur";
+			  url = "jdbc:mysql://127.0.0.1:3306/testevaluateur?autoReconnect=true&useSSL=false";
 			  user = "root";
-			  pwd = "";
+			  pwd = "root";
 		    break;
-		  case "oracle" : //Pas configuré
+		  case "oracle" : //Pas configurï¿½
 			  driver = "oracle.jdbc.driver.OracleDriver";
 			  url = "jdbc:oracle:thin:@";
 			  user = "root";
 			  pwd = "";
 		    break;
-		  case "postgre" : //Pas configuré
+		  case "postgre" :
 			  driver = "org.postgresql.Driver";
-			  url = "jdbc:postgresql://";
+			  url = "jdbc:postgresql://127.0.0.1:5432/testevaluateur";
 			  user = "root";
-			  pwd = "";
+			  pwd = "root";
 		    break;
 		}
 		try {
@@ -44,16 +44,16 @@ public class Connexion { //Cette classe est configurée pour se connecter au BD l
             System.out.println("Impossible de charger le pilote");
             System.exit(1);
         }
-		System.out.println("Pilote chargé");
+		//System.out.println("Pilote chargï¿½");
 		
 		try {
 			maConnexion = DriverManager.getConnection(url,user,pwd);
 		}
 		catch (SQLException e) {
-			System.out.println("Impossible de se connecter à la base de données");
+			System.out.println(e);
         	System.exit(1);
 		}
-		System.out.println("Connecté à " + url);
+		//System.out.println("Connectï¿½ ï¿½ " + url);
 	}
 	
 	//Methodes
@@ -86,19 +86,19 @@ public class Connexion { //Cette classe est configurée pour se connecter au BD l
 		int cpt = 0;
 		ArrayList<String> requetes = new ArrayList<String>();
 		requetes.add("");
-		try (FileReader in = new FileReader(nomFichier)) {
+		try (FileInputStream in = new FileInputStream(nomFichier)) {
 			c = in.read();
 			while (c!=-1) { //Tant qu'il reste un character a lire dans le fichier
 				if (c == 59) { //Si ";"
-					System.out.println(requetes.get(cpt)); //J'affiche la requete que l'on vient de délimiter
+					//System.out.println(requetes.get(cpt)); //J'affiche la requete que l'on vient de dï¿½limiter
 					Statement stmtUpdate = maConnexion.createStatement();
 					stmtUpdate.executeUpdate(requetes.get(cpt)); //On execute cette fameuse requete
-					requetes.add(""); //Je crée une place pour la requete qui suit dans le fichier
+					requetes.add(""); //Je crï¿½e une place pour la requete qui suit dans le fichier
 					cpt++;
 				}
 				else if ((c == 32 && back == 32) || c == 10 || c == 13) { //Si double espace ou retour chariot linux/windows
 					//Ne rien faire
-				} else { //J'ajouter le character trouvé à la suite de la requete en train d'etre construite
+				} else { //J'ajouter le character trouvï¿½ ï¿½ la suite de la requete en train d'etre construite
 					String temp = requetes.get(cpt);
 					requetes.set(cpt, temp + Character.toString((char) c));
 				}

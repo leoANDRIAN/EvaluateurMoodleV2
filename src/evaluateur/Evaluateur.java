@@ -10,8 +10,8 @@ public class Evaluateur {
 
 	public static void main(String[] args) throws SQLException {
 		
-		//TO-DO : Trouver pourquoi il récupère pas tout les champs demandés lors de l'execution de la requete
-		//TO-DO : Fermer les connexion et les resultSet aux endroits nécéssaires
+		//TO-DO : Trouver pourquoi il rï¿½cupï¿½re pas tout les champs demandï¿½s lors de l'execution de la requete
+		//TO-DO : Fermer les connexion et les resultSet aux endroits nï¿½cï¿½ssaires
 		
 		//RECUPERATION DES DONNEES EXTERNES NECESSAIRES A L'EXECUTION DU PROGRAMME
 		String sgbd = args[0];
@@ -32,24 +32,24 @@ public class Evaluateur {
 		
 		//PHASE DE CONNEXION BD
 		Connexion connexion = new Connexion(sgbd);
-		connexion.deleteBD(); //Permet de nettoyer une BD mySQL au cas ou elle n'aurait pas été vidée (a etendre aux autres SGBD)
+		connexion.deleteBD(); //Permet de nettoyer une BD mySQL au cas ou elle n'aurait pas ï¿½tï¿½ vidï¿½e (a etendre aux autres SGBD)
 		
 		Reponse reponseEleve = null;
 		Reponse reponseEnseignant = null;
 		
 		//GENERATION DU RESULTAT DE LA REQUETE A TRAITER (voir le constructeur de la classe Reponse)
-		String [] splittedRequete1 = requeteEnseignant.split(" ", 4); //On récupère les premiers mots de la requete de l'enseignant
+		String [] splittedRequete1 = requeteEnseignant.split(" ", 4); //On rï¿½cupï¿½re les premiers mots de la requete de l'enseignant
 		String typeRequete1 = splittedRequete1[0].toUpperCase(); //On recupere le type de la requete (1er mot)
-		String [] splittedRequete2 = requeteEleve.split(" ", 4); //On récupère les premiers mots de la requete de l'eleve
+		String [] splittedRequete2 = requeteEleve.split(" ", 4); //On rï¿½cupï¿½re les premiers mots de la requete de l'eleve
 		String typeRequete2 = splittedRequete2[0].toUpperCase(); //On recupere le type de la requete (1er mot)
-		boolean queryResult = false; //Permet de savoir si la requete a un resultat pour executer la fonction de comparaison adaptée (true dans tous les cas car les requetes DLL ne sont pas encore supportées)
+		boolean queryResult = false; //Permet de savoir si la requete a un resultat pour executer la fonction de comparaison adaptï¿½e (true dans tous les cas car les requetes DLL ne sont pas encore supportï¿½es)
 		if (!typeRequete1.equals(typeRequete2)) {
-			System.out.println("La requete de l'élève n'est pas du meme type que celle de l'enseignant");
+			System.out.println("La requete de l'ï¿½lï¿½ve n'est pas du meme type que celle de l'enseignant");
 			System.exit(0);
 		}
-		String tableSelect1 = null; //Dans le cas d'une requete modifiante, on récupère la table qui est modifié pour faire un select ensuite
+		String tableSelect1 = null; //Dans le cas d'une requete modifiante, on rï¿½cupï¿½re la table qui est modifiï¿½ pour faire un select ensuite
 		String tableSelect2 = null;
-		switch (typeRequete1) { //On créer la réponse à partir de la requete
+		switch (typeRequete1) { //On crï¿½er la rï¿½ponse ï¿½ partir de la requete
 		  case "SELECT" :
 			  reponseEnseignant = new Select(requeteEnseignant, nomFichier, connexion);
 			  reponseEleve = new Select(requeteEleve, nomFichier, connexion);
@@ -77,7 +77,7 @@ public class Evaluateur {
 			  reponseEleve = new Delete(requeteEleve, nomFichier, connexion, tableSelect2);
 			  queryResult = true;
 		    break;
-		  case "INSERT" : //A tweak car la "(" peut etre collé à la table je crois
+		  case "INSERT" : //A tweak car la "(" peut etre collï¿½ ï¿½ la table je crois
 			  tableSelect1 = splittedRequete1[2];
 			  tableSelect2 = splittedRequete2[2];
 			  if (!tableSelect1.equals(tableSelect2)) {
@@ -89,7 +89,7 @@ public class Evaluateur {
 			  queryResult = true;
 			break;
 		  default:
-			  System.out.println("Requete invalide : type de requete inconnue ou non supportée");
+			  System.out.println("Requete invalide : type de requete inconnue ou non supportï¿½e");
 			  System.exit(1);
 		}
 		if (queryResult) {

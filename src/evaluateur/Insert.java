@@ -24,7 +24,7 @@ public class Insert extends Modifiantes {
 				}
 				lastChar = 32;
 				continue;
-			} else if (currentChar == 40 || currentChar == 41) { //Si parenthèse
+			} else if (currentChar == 40 || currentChar == 41) { //Si parenthï¿½se
 				if (lastChar == 32 && this.requete.charAt(i) == 32) {
 					i++;
 				} else if (lastChar == 32 || this.requete.charAt(i) == 32) {
@@ -42,7 +42,7 @@ public class Insert extends Modifiantes {
 			lastChar = currentChar;
 		}
 		this.cleanRequete = standardised.toUpperCase();
-		System.out.println("Standard : " + this.cleanRequete);
+		//System.out.println("Standard : " + this.cleanRequete);
 		
 		String[] requeteSplit = this.cleanRequete.split(" ");
 		
@@ -71,44 +71,28 @@ public class Insert extends Modifiantes {
 	}
 	
 	public void compareSyntaxe(Reponse reponse) {
-		boolean sameItems = true;
+		//boolean sameItems = true;
 		if (!allField) {
-			System.out.println("Comparaison des champs ajoutés :");
 			if (fields.size()>((Insert) reponse).getFields().size()) {
-				System.out.println("Vous avez indiquez plus de champs que nécéssaires");
+				System.out.println("Vous avez indiquez plus de champs que necessaires");
 			} else if (fields.size()<((Insert) reponse).getFields().size()) {
-				System.out.println("Vous avez indiquez moins de champs que nécéssaire");
-			} else {
-				System.out.println("Vous avez indiquez le bon nombre de champs");
+				System.out.println("Vous avez indiquez moins de champs que necessaire");
 			}
-			sameItems = true;
 			for (String item : fields) {
 				if (!((Insert) reponse).getFields().contains(item)) {
-					System.out.println(item + " n'apparait pas dans la réponse du prof");
-					sameItems = false;
+					System.out.println(item + " n'apparait pas dans la reponse du prof");
 				}
 			}
-			if (sameItems) {
-				System.out.println("Vos champs sont identiques à ceux du prof");
-			}
 		}
-		System.out.println("Comparaison des valeurs indiquées : ");
 		if (values.size()>((Insert) reponse).getValues().size()) {
-			System.out.println("Vous avez indiquez plus de valeurs que nécéssaires");
+			System.out.println("Vous avez indiquez plus de valeurs que necessaires");
 		} else if (values.size()<((Insert) reponse).getValues().size()) {
-			System.out.println("Vous avez indiquez moins de valeurs que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de valeurs");
+			System.out.println("Vous avez indiquez moins de valeurs que necessaire");
 		}
-		sameItems = true;
 		for (String item : values) {
 			if (!((Insert) reponse).getValues().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos valeurs sont identiques à ceux du prof");
 		}
 	}
 	

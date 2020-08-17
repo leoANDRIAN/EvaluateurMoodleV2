@@ -26,18 +26,18 @@ public class Delete extends Modifiantes {
 			lastChar = currentChar;
 		}
 		this.cleanRequete = standardised.toUpperCase();
-		System.out.println("Standard : " + this.cleanRequete);
+		//System.out.println("Standard : " + this.cleanRequete);
 		
 		String[] requeteSplit = this.cleanRequete.split(" ");
 		
 		if (requeteSplit.length > 4) { //Si on a une clause WHERE
 			boolWhere = true;
-			String currentItem = ""; //Permet d'accumuler les elements séparés par un espace : age > 40 --> age>40;
+			String currentItem = ""; //Permet d'accumuler les elements sï¿½parï¿½s par un espace : age > 40 --> age>40;
 			for (int i = 4; i < requeteSplit.length; i++) {
-				if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument précédant dans l'array et on prepare currentItem pour le prochain argument
+				if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument prï¿½cï¿½dant dans l'array et on prepare currentItem pour le prochain argument
 					conditions.add(currentItem);
 					currentItem = "";
-				} else if (requeteSplit[i].equals(";")) { //On est arrivé au bout de la requete (on l'aura séparé du reste de la requete pendant la phase de standardisation)
+				} else if (requeteSplit[i].equals(";")) { //On est arrivï¿½ au bout de la requete (on l'aura sï¿½parï¿½ du reste de la requete pendant la phase de standardisation)
 					conditions.add(currentItem);
 					break;
 				} else {
@@ -49,23 +49,15 @@ public class Delete extends Modifiantes {
 	
 	public void compareSyntaxe(Reponse reponse) {
 		if (boolWhere) {
-			System.out.println("Comparaison des conditions des requetes :");
 			if (conditions.size()>((Delete) reponse).getConditions().size()) {
-				System.out.println("Vous avez indiquez plus de conditions que nécéssaires");
+				System.out.println("Vous avez indiquez plus de conditions que nï¿½cï¿½ssaires");
 			} else if (conditions.size()<((Delete) reponse).getConditions().size()) {
-				System.out.println("Vous avez indiquez moins de conditions que nécéssaire");
-			} else {
-				System.out.println("Vous avez indiquez le bon nombre de conditions");
+				System.out.println("Vous avez indiquez moins de conditions que nï¿½cï¿½ssaire");
 			}
-			boolean sameItems = true;
 			for (String item : conditions) {
 				if (!((Delete) reponse).getConditions().contains(item)) {
-					System.out.println(item + " n'apparait pas dans la réponse du prof");
-					sameItems = false;
+					System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 				}
-			}
-			if (sameItems) {
-				System.out.println("Vos conditions sont identiques à celles du prof");
 			}
 		}
 	}

@@ -11,12 +11,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="mysql-connector.jar">
+	<classpathentry kind="lib" path="ojdbc6.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="ojdbc6.jar">
+	<classpathentry kind="lib" path="/home/user/Downloads/EvaluateurMoodleV2/mysql.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

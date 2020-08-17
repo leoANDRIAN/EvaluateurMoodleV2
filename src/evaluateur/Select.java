@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Select extends QueryResult { //Créer une réponse à partir d'un SELECT
+public class Select extends QueryResult { //Crï¿½er une rï¿½ponse ï¿½ partir d'un SELECT
 	
 	private ArrayList<String> champs = new ArrayList<String>();
 	private ArrayList<String> tables = new ArrayList<String>();
@@ -15,7 +15,7 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 		super(requete, nomFichier);
 	}
 
-	//TO-DO : améliorer l'analyse du select (natural join, select dans select...)
+	//TO-DO : amï¿½liorer l'analyse du select (natural join, select dans select...)
 	
 	public Select(String requete, String nomFichier, Connexion connexion) {
 		//TRANSFORMATION DU RESULTSET EN ARRAY
@@ -39,12 +39,12 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 			lastChar = currentChar;
 		}
 		this.cleanRequete = standardised.toUpperCase();
-		System.out.println("Standard : " + this.cleanRequete);
+		//System.out.println("Standard : " + this.cleanRequete);
 		
 		String[] requeteSplit = this.cleanRequete.split(" ");
 		
 		//ancien getSelectItems(String[] requeteSplit, ArrayList<String> array);
-		int fromPos = 0; //Va permettre de récupérer la position du from dans la requete pour commencer a partir de cette position dans le methode suivante (optimisation nb calcul)
+		int fromPos = 0; //Va permettre de rï¿½cupï¿½rer la position du from dans la requete pour commencer a partir de cette position dans le methode suivante (optimisation nb calcul)
 		for (int i = 1; i < requeteSplit.length; i++) {
 			if (requeteSplit[i].equals("FROM")) {
 				fromPos = i;
@@ -66,12 +66,12 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 		}
 
 		//ancien getWhereItems(int wherePos, String[] requeteSplit, ArrayList<String> array)
-		String currentItem = ""; //Permet d'accumuler les elements séparés par un espace : age > 40 --> age>40;
+		String currentItem = ""; //Permet d'accumuler les elements sï¿½parï¿½s par un espace : age > 40 --> age>40;
 		for (int i = wherePos + 1; i < requeteSplit.length; i++) {
-			if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument précédant dans l'array et on prepare currentItem pour le prochain argument
+			if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument prï¿½cï¿½dant dans l'array et on prepare currentItem pour le prochain argument
 				conditions.add(currentItem);
 				currentItem = "";
-			} else if (requeteSplit[i].equals(";")) { //On est arrivé au bout de la requete (on l'aura séparé du reste de la requete pendant la phase de standardisation)
+			} else if (requeteSplit[i].equals(";")) { //On est arrivï¿½ au bout de la requete (on l'aura sï¿½parï¿½ du reste de la requete pendant la phase de standardisation)
 				conditions.add(currentItem);
 				break;
 			} else {
@@ -79,7 +79,7 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 			}
 		}
 		
-		//Récupération du resultat de la requete
+		//Rï¿½cupï¿½ration du resultat de la requete
 		connexion.executeSQLfile(this.nomFichier);
 		try {
 			Statement stmt = connexion.getConnection().createStatement();
@@ -88,10 +88,10 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 			resRequete = new ArrayList<ArrayList<Object>>();
 			
 			while(resultat.next()) {
-				//Une ligne doit pouvoir stocker différent types car une requete peut renvoyer plusieurs types de données (on utilise donc Object)
+				//Une ligne doit pouvoir stocker diffï¿½rent types car une requete peut renvoyer plusieurs types de donnï¿½es (on utilise donc Object)
 				ArrayList<Object> ligne = new ArrayList<Object>();
 				for (int i = 1; i < nbCol; i++) { //Pour chaque colonne
-					ligne.add(resultat.getString(i)); //On ajoute à la ligne la valeur de la colonne
+					ligne.add(resultat.getString(i)); //On ajoute ï¿½ la ligne la valeur de la colonne
 				}
 				resRequete.add(ligne);
 			}
@@ -118,61 +118,37 @@ public class Select extends QueryResult { //Créer une réponse à partir d'un SELE
 	
 	public void compareSyntaxe(Reponse reponse) {
 		//Comparaison des champs
-		System.out.println("Comparaison des champs : ");
 		if (champs.size()>((Select) reponse).getChamps().size()) {
-			System.out.println("Vous avez indiquez plus de champs que nécéssaires");
+			System.out.println("Vous avez indiquez plus de champs que nï¿½cï¿½ssaires");
 		} else if (champs.size()<((Select) reponse).getChamps().size()) {
-			System.out.println("Vous avez indiquez moins de champs que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de champs");
+			System.out.println("Vous avez indiquez moins de champs que nï¿½cï¿½ssaire");
 		}
-		boolean sameItems = true;
 		for (String item : champs) {
 			if (!((Select) reponse).getChamps().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos champs sont identiques à ceux du prof");
 		}
 		//Comparaison des tables
-		System.out.println("Comparaison des tables : ");
 		if (tables.size()>((Select) reponse).getTables().size()) {
-			System.out.println("Vous avez indiquez plus de tables que nécéssaires");
+			System.out.println("Vous avez indiquez plus de tables que nï¿½cï¿½ssaires");
 		} else if (tables.size()<((Select) reponse).getTables().size()) {
-			System.out.println("Vous avez indiquez moins de tables que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de tables");
+			System.out.println("Vous avez indiquez moins de tables que nï¿½cï¿½ssaire");
 		}
-		sameItems = true;
 		for (String item : tables) {
 			if (!((Select) reponse).getTables().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos tables sont identiques à ceux du prof");
 		}
 		//Comparaison des conditions
-		System.out.println("Comparaison des elements suivant WHERE : ");
 		if (conditions.size()>((Select) reponse).getConditions().size()) {
-			System.out.println("Vous avez indiquez plus de conditions que nécéssaires");
+			System.out.println("Vous avez indiquez plus de conditions que nï¿½cï¿½ssaires");
 		} else if (conditions.size()<((Select) reponse).getConditions().size()) {
-			System.out.println("Vous avez indiquez moins de conditions que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de conditions");
+			System.out.println("Vous avez indiquez moins de conditions que nï¿½cï¿½ssaire");
 		}
-		sameItems = true;
 		for (String item : conditions) {
 			if (!((Select) reponse).getConditions().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos conditions sont identiques à celles du prof");
 		}
 	}
 }

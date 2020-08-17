@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public abstract class Modifiantes extends QueryResult { //Créer une réponse à partir d'une requete modifiante
+public abstract class Modifiantes extends QueryResult { //Crï¿½er une rï¿½ponse ï¿½ partir d'une requete modifiante
 	
 	protected String table;
 	
@@ -15,7 +15,7 @@ public abstract class Modifiantes extends QueryResult { //Créer une réponse à pa
 		//TRANSFORMATION DU RESULTSET EN ARRAY
 		connexion.executeSQLfile(this.nomFichier);
 		try {
-			//Comme la requete est modifiante on modifie d'abord la table puis on remplace la requete par un select de la table pour voir ce qui a ete modifié
+			//Comme la requete est modifiante on modifie d'abord la table puis on remplace la requete par un select de la table pour voir ce qui a ete modifiï¿½
 			Statement stmtUpdate = connexion.getConnection().createStatement();
 			stmtUpdate.executeUpdate(requete);
 			stmtUpdate.close();
@@ -28,15 +28,15 @@ public abstract class Modifiantes extends QueryResult { //Créer une réponse à pa
 			resRequete = new ArrayList<ArrayList<Object>>();
 			
 			while(resultat.next()) {
-				//Une ligne doit pouvoir stocker différent types car une requete peut renvoyer plusieurs types de données (on utilise donc Object)
+				//Une ligne doit pouvoir stocker diffï¿½rent types car une requete peut renvoyer plusieurs types de donnï¿½es (on utilise donc Object)
 				ArrayList<Object> ligne = new ArrayList<Object>();
 				for (int i = 1; i < nbCol; i++) { //Pour chaque colonne
-					ligne.add(resultat.getString(i)); //On ajoute à la ligne la valeur de la colonne
+					ligne.add(resultat.getString(i)); //On ajoute ï¿½ la ligne la valeur de la colonne
 				}
 				resRequete.add(ligne);
 			}
 			stmt.close();
-			System.out.println("Reponse crée");
+			//System.out.println("Reponse crï¿½e");
 		}
 		catch (SQLException e) {
 			System.out.println(e);

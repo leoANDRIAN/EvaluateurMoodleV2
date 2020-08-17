@@ -47,7 +47,7 @@ public class Update extends Modifiantes {
 		
 		String[] requeteSplit = this.cleanRequete.split(" ");
 		
-		int WherePos = 0; //Va permettre de récupérer la position du from dans la requete pour commencer a partir de cette position dans le methode suivante (optimisation nb calcul)
+		int WherePos = 0; //Va permettre de rï¿½cupï¿½rer la position du from dans la requete pour commencer a partir de cette position dans le methode suivante (optimisation nb calcul)
 		for (int i = 3; i < requeteSplit.length; i++) {
 			if (requeteSplit[i].equals("WHERE")) {
 				WherePos = i;
@@ -61,12 +61,12 @@ public class Update extends Modifiantes {
 		}
 		
 		if (boolWhere == true) {
-			String currentItem = ""; //Permet d'accumuler les elements séparés par un espace : age > 40 --> age>40;
+			String currentItem = ""; //Permet d'accumuler les elements sï¿½parï¿½s par un espace : age > 40 --> age>40;
 			for (int i = WherePos + 1; i < requeteSplit.length; i++) {
-				if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument précédant dans l'array et on prepare currentItem pour le prochain argument
+				if (requeteSplit[i].equals("AND")) { //Si on tombe sur AND on ajoute l'argument prï¿½cï¿½dant dans l'array et on prepare currentItem pour le prochain argument
 					conditions.add(currentItem);
 					currentItem = "";
-				} else if (requeteSplit[i].equals(";")) { //On est arrivé au bout de la requete (on l'aura séparé du reste de la requete pendant la phase de standardisation)
+				} else if (requeteSplit[i].equals(";")) { //On est arrivï¿½ au bout de la requete (on l'aura sï¿½parï¿½ du reste de la requete pendant la phase de standardisation)
 					conditions.add(currentItem);
 					break;
 				} else {
@@ -85,44 +85,28 @@ public class Update extends Modifiantes {
 	}
 	
 	public void compareSyntaxe(Reponse reponse) {
-		//Comparaison des champs modifiés
-		System.out.println("Comparaison des champs modifiés : ");
+		//Comparaison des champs modifiï¿½s
 		if (champs.size()>((Update) reponse).getChamps().size()) {
-			System.out.println("Vous avez indiquez plus de modifications que nécéssaires");
+			System.out.println("Vous avez indiquez plus de modifications que nï¿½cï¿½ssaires");
 		} else if (champs.size()<((Update) reponse).getChamps().size()) {
-			System.out.println("Vous avez indiquez moins de modifications que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de modifications");
+			System.out.println("Vous avez indiquez moins de modifications que nï¿½cï¿½ssaire");
 		}
-		boolean sameItems = true;
 		for (String item : champs) {
 			if (!((Update) reponse).getChamps().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos champs sont identiques à ceux du prof");
 		}
 		
 		//Comparaison des conditions s'il y en a
-		System.out.println("Comparaison des elements suivant WHERE : ");
 		if (conditions.size()>((Update) reponse).getConditions().size()) {
-			System.out.println("Vous avez indiquez plus de conditions que nécéssaires");
+			System.out.println("Vous avez indiquez plus de conditions que nï¿½cï¿½ssaires");
 		} else if (conditions.size()<((Update) reponse).getConditions().size()) {
-			System.out.println("Vous avez indiquez moins de conditions que nécéssaire");
-		} else {
-			System.out.println("Vous avez indiquez le bon nombre de conditions");
+			System.out.println("Vous avez indiquez moins de conditions que nï¿½cï¿½ssaire");
 		}
-		sameItems = true;
 		for (String item : conditions) {
 			if (!((Update) reponse).getConditions().contains(item)) {
-				System.out.println(item + " n'apparait pas dans la réponse du prof");
-				sameItems = false;
+				System.out.println(item + " n'apparait pas dans la rï¿½ponse du prof");
 			}
-		}
-		if (sameItems) {
-			System.out.println("Vos conditions sont identiques à celles du prof");
 		}
 	}
 	

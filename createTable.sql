@@ -1,9 +1,8 @@
 CREATE TABLE test (
-    numero int NOT NULL AUTO_INCREMENT,
     nom varchar(25),
     prenom varchar(25),
     age int,
-    PRIMARY KEY (numero)
+    PRIMARY KEY (prenom)
 );
 
 INSERT INTO test (nom, prenom, age) VALUES ('Alain', 'Térieur', 23);
