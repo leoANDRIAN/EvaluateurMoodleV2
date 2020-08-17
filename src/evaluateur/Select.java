@@ -5,18 +5,40 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Classe concrete permettant de traiter une requete SELECT :
+ * Standardisation puis analyse de la synthaxe de la requete
+ * 
+ * @version 	%I%, %G%
+ * @author 	ANDRIANTSIZAFY Leo
+ */
 public class Select extends QueryResult { //Crï¿½er une rï¿½ponse ï¿½ partir d'un SELECT
 	
+	/**
+	 * Tableau contenant les arguments suivant le mot SELECT jusqu'a FROM
+	 */
 	private ArrayList<String> champs = new ArrayList<String>();
+	
+	/**
+	 * Tableau contenant les arguments suivant le mot FROM jusqu'a WHERE
+	 */
 	private ArrayList<String> tables = new ArrayList<String>();
+	
+	/**
+	 * Tableau contenant les arguments suivant le mot WHERE jusqu'a ";"
+	 */
 	private ArrayList<String> conditions = new ArrayList<String>();
 	
-	public Select(String requete, String nomFichier) { //Constructeur dummy
-		super(requete, nomFichier);
-	}
 
 	//TO-DO : amï¿½liorer l'analyse du select (natural join, select dans select...)
 	
+	/** 
+     * Constructeur de la classe SELECT, va permettre de peupler les attributs de la classe (cf attributs), standardiser et anlayser la requete et enfin executer la requete
+     * 
+     * @param requete        la requete (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param nomFichier        la nom du fichier (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param connexion        la connexion (String) nécéssaire à l'execution des requetes SQL
+     */
 	public Select(String requete, String nomFichier, Connexion connexion) {
 		//TRANSFORMATION DU RESULTSET EN ARRAY
 		super(requete, nomFichier);
@@ -104,18 +126,40 @@ public class Select extends QueryResult { //Crï¿½er une rï¿½ponse ï¿½ partir d'u
 		connexion.deleteBD();
 	}
 	
+	/** 
+     * Getter de l'attribut champs
+     * 
+     * @return renvoi le tableau contenu dans champs
+     */
 	public ArrayList<String> getChamps() {
 		return champs;
 	}
 
+	/** 
+     * Getter de l'attribut tables
+     * 
+     * @return renvoi le tableau contenu dans tables
+     */
 	public ArrayList<String> getTables() {
 		return tables;
 	}
 
+	/** 
+     * Getter de l'attribut conditions
+     * 
+     * @return renvoi le tableau contenu dans conditions
+     */
 	public ArrayList<String> getConditions() {
 		return conditions;
 	}
 	
+	/** 
+     * Methode permettant de comparer la synthaxe entre les requetes de deux objets Select.
+     * Cette methode doit etre implémentée par chaque classe concrète héritant de Reponse.
+     * Compare les tableaux (attributs) des deux objets.
+     * 
+     * @param reponse        Autre objet reponse avec lequel on veut comparer notre cible
+     */
 	public void compareSyntaxe(Reponse reponse) {
 		//Comparaison des champs
 		if (champs.size()>((Select) reponse).getChamps().size()) {

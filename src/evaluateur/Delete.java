@@ -2,11 +2,33 @@ package evaluateur;
 
 import java.util.ArrayList;
 
+/**
+ * Classe concrete permettant de traiter une requete DELETE :
+ * Standardisation puis analyse de la synthaxe de la requete
+ * 
+ * @version 	%I%, %G%
+ * @author 	ANDRIANTSIZAFY Leo
+ */
 public class Delete extends Modifiantes {
 	
+	/**
+	 * Boolean permettant de savoir si la requete comporte l'argument WHERE
+	 */
 	private boolean boolWhere;
+	
+	/**
+	 * Tableau contenant les arguments suivant le mot WHERE jusqu'a ";" (uniquement si booWhere est vrai)
+	 */
 	private ArrayList<String> conditions = new ArrayList<String>();
 	
+	/** 
+     * Constructeur de la classe DELETE, va permettre de peupler les attributs de la classe (cf attributs), standardiser et anlayser la requete et enfin executer la requete
+     * 
+     * @param requete        la requete (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param nomFichier        la nom du fichier (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param connexion        la connexion (String) nécéssaire à l'execution des requetes SQL
+     * @param tabSelect        nom de la table permettant de peupler l'attribut table (String) sera appelé par le super constructeur de la classe
+     */
 	public Delete(String requete, String nomFichier, Connexion connexion, String tabSelect) {
 		super(requete, nomFichier, connexion, tabSelect);
 		boolWhere = false;
@@ -47,6 +69,13 @@ public class Delete extends Modifiantes {
 		}
 	}
 	
+	/** 
+     * Methode permettant de comparer la synthaxe entre les requetes de deux objets Delete.
+     * Cette methode doit etre implémentée par chaque classe concrète héritant de Reponse.
+     * Compare les tableaux (attributs) des deux objets.
+     * 
+     * @param reponse        Autre objet reponse avec lequel on veut comparer notre cible
+     */
 	public void compareSyntaxe(Reponse reponse) {
 		if (boolWhere) {
 			if (conditions.size()>((Delete) reponse).getConditions().size()) {
@@ -62,6 +91,11 @@ public class Delete extends Modifiantes {
 		}
 	}
 	
+	/** 
+     * Getter de l'attribut conditions
+     * 
+     * @return renvoi le tableau contenu dans conditions
+     */
 	public ArrayList<String> getConditions() {
 		return conditions;
 	}

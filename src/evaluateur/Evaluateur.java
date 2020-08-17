@@ -2,6 +2,13 @@ package evaluateur;
 
 import java.sql.*;
 
+/**
+ * Classe servant de corps pour executer le programme
+ * Le programme doit prendre en arguments dans l'ordre : le SGBG auquel se connecter (mySQL), la requete de l'enseignant, la requete de l'eleve, le chemin vers le fichier contenant les requetes permettant de créer une BD de test (Creates et insert)
+ * 
+ * @version 	%I%, %G%
+ * @author 	ANDRIANTSIZAFY Leo
+ */
 public class Evaluateur {
 	
 	public Evaluateur() {}

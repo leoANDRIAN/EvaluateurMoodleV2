@@ -6,16 +6,49 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Classe concrète permettant de stocker les élément nécéssaires à la connection à une base de données grace a l'api JDBC
+ * 
+ * @version 	%I%, %G%
+ * @author 	ANDRIANTSIZAFY Leo
+ */
 public class Connexion { //Cette classe est configurï¿½e pour se connecter au BD locales
 	
 	//Attributs
+	/**
+	 * Denomination du driver nécéssaire pour ce connecter à une BD précise ex: pour mySQL = "com.mysql.jdbc.Driver"
+	 */
 	private String driver;
+	
+	/**
+	 * l'URL de connection contenant le nom de la BD à laquelle on veut se connecter, son adresse, et son type ex : "jdbc:mysql://127.0.0.1:3306/nomBD"
+	 */
 	private String url;
+	
+	/**
+	 * Nom de l'utilisateur autorisé à se connecter à la BD
+	 */
 	private String user;
+	
+	/**
+	 * Mot de passe de l'utilisateur autorisé à se connecter à la BD
+	 */
 	private String pwd;
+	
+	/**
+	 * Objet servant d'autorisation d'accès à la BD
+	 * Généré grace aux autre attributs
+	 * 
+	 */
 	private Connection maConnexion;
 	
 	//Constructeurs
+	/** 
+     * Constructeur de la classe Connexion, permet de peuplé les attributs, loadé le driver nécéssaire pour utiliser l'API JDBC et généré la connexion (cf l'attribut maConnexion)
+     * Les BD sur lequelles le programme peut se connecter sont prédéfinies (cf le corps du constructeur)
+     * 
+     * @param sgbd        type de la BD à laquelle on veut se connecté
+     */
 	public Connexion(String sgbd) {
 		switch (sgbd) { //Chargement du driver adaptï¿½ et connexion au SGBD choisi par l'enseignant sur codeRunner
 		  case "mySQL" :
@@ -57,10 +90,21 @@ public class Connexion { //Cette classe est configurï¿½e pour se connecter au BD
 	}
 	
 	//Methodes
+	/** 
+     * Getter de l'attribut maConnexion
+     * 
+     * @return renvoi un objet Connection configuré pour accéder à une BD
+     */
 	public Connection getConnection() {
 		return maConnexion;
 	}
 	
+	/** 
+     * Methode permettant de vider une BD mySQL
+     * Cette methode permettra dans un futur proche de vider plusieurs types de BD
+     * A utiliser après avoir executer ses requete pour libérer la BD
+     * 
+     */
 	public void deleteBD() {
 		try {
 			  Statement offConstraints = maConnexion.createStatement();
@@ -80,6 +124,11 @@ public class Connexion { //Cette classe est configurï¿½e pour se connecter au BD
 		}
 	}
 	
+	/** 
+     * Methode permettant d'executer les commandes SQL contenu dans un fichier (.sql, .txt)
+     * 
+     * @param nomFichier        Chemin menant au fichier dont on veut executer le contenu ex: "/usr/local/createTable.txt"
+     */
 	public void executeSQLfile(String nomFichier) {
 		int c;
 		int back = 0;

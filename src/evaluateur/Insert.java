@@ -2,12 +2,38 @@ package evaluateur;
 
 import java.util.ArrayList;
 
+/**
+ * Classe concrete permettant de traiter une requete INSERT :
+ * Standardisation puis analyse de la synthaxe de la requete
+ * 
+ * @version 	%I%, %G%
+ * @author 	ANDRIANTSIZAFY Leo
+ */
 public class Insert extends Modifiantes {
 	
+	/**
+	 * Boolean permettant de savoir si la requete insert des données dans tout les champs de la table (pas besoin de préciser les champs)
+	 */
 	private boolean allField;
+	
+	/**
+	 * Tableau contenant les arguments suivant le nom de la table jusqu'a VALUES (depend de allField)
+	 */
 	private ArrayList<String> fields = new ArrayList<String>();
+	
+	/**
+	 * Tableau contenant les arguments suivant le mot VALUES jusqu'a ";"
+	 */
 	private ArrayList<String> values = new ArrayList<String>();
 	
+	/** 
+     * Constructeur de la classe INSERT, va permettre de peupler les attributs de la classe (cf attributs), standardiser et anlayser la requete et enfin executer la requete
+     * 
+     * @param requete        la requete (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param nomFichier        la nom du fichier (String) à stocker qui sera appelé par le super constructeur de la classe
+     * @param connexion        la connexion (String) nécéssaire à l'execution des requetes SQL
+     * @param tabSelect        nom de la table permettant de peupler l'attribut table (String) sera appelé par le super constructeur de la classe
+     */
 	public Insert(String requete, String nomFichier, Connexion connexion, String tabSelect) {
 		super(requete, nomFichier, connexion, tabSelect);
 		allField = false;
@@ -70,6 +96,13 @@ public class Insert extends Modifiantes {
 		}
 	}
 	
+	/** 
+     * Methode permettant de comparer la synthaxe entre les requetes de deux objets Insert.
+     * Cette methode doit etre implémentée par chaque classe concrète héritant de Reponse.
+     * Compare les tableaux (attributs) des deux objets.
+     * 
+     * @param reponse        Autre objet reponse avec lequel on veut comparer notre cible
+     */
 	public void compareSyntaxe(Reponse reponse) {
 		//boolean sameItems = true;
 		if (!allField) {
@@ -96,10 +129,20 @@ public class Insert extends Modifiantes {
 		}
 	}
 	
+	/** 
+     * Getter de l'attribut fields
+     * 
+     * @return renvoi le tableau contenu dans fields
+     */
 	public ArrayList<String> getFields() {
 		return fields;
 	}
 	
+	/** 
+     * Getter de l'attribut values
+     * 
+     * @return renvoi le tableau contenu dans values
+     */
 	public ArrayList<String> getValues() {
 		return values;
 	}
